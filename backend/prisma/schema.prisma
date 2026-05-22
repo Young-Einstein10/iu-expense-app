@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  fullName     String?  @map("full_name")
+  avatarUrl    String?  @map("avatar_url")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  categories        Category[]         @relation("UserCategories")
+  expenses          Expense[]          @relation("UserExpenses")
+  budgets           Budget[]           @relation("UserBudgets")
+  recurringExpenses RecurringExpense[] @relation("UserRecurringExpenses")
+
+  @@map("users")
+}
+
+model Category {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  name      String
+  icon      String?
+  color     String?
+  isDefault Boolean  @default(false) @map("is_default")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user              User               @relation("UserCategories", fields: [userId], references: [id], onDelete: Cascade)
+  expenses          Expense[]          @relation("CategoryExpenses")
+  budgets           Budget[]           @relation("CategoryBudgets")
+  recurringExpenses RecurringExpense[] @relation("CategoryRecurringExpenses")
+
+  @@unique([userId, name])
+  @@map("categories")
+}
+
+model Expense {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  categoryId  String?  @map("category_id") @db.Uuid
+  amount      Decimal  @db.Decimal(10, 2)
+  description String
+  date        DateTime @db.Date
+  receiptUrl  String?  @map("receipt_url")
+  tags        String[]
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user     User      @relation("UserExpenses", fields: [userId], references: [id], onDelete: Cascade)
+  category Category? @relation("CategoryExpenses", fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@map("expenses")
+}
+
+model Budget {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  categoryId String   @map("category_id") @db.Uuid
+  amount     Decimal  @db.Decimal(10, 2)
+  period     String // 'monthly', 'weekly', 'yearly'
+  startDate  DateTime @map("start_date") @db.Date
+  endDate    DateTime @map("end_date") @db.Date
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user     User     @relation("UserBudgets", fields: [userId], references: [id], onDelete: Cascade)
+  category Category @relation("CategoryBudgets", fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@map("budgets")
+}
+
+model RecurringExpense {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  categoryId  String?  @map("category_id") @db.Uuid
+  amount      Decimal  @db.Decimal(10, 2)
+  description String
+  frequency   String // 'daily', 'weekly', 'monthly', 'yearly'
+  nextDueDate DateTime @map("next_due_date") @db.Date
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user     User      @relation("UserRecurringExpenses", fields: [userId], references: [id], onDelete: Cascade)
+  category Category? @relation("CategoryRecurringExpenses", fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@map("recurring_expenses")
+}
