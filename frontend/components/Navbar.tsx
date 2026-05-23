@@ -17,21 +17,21 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800">
+    <nav className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800">
       {/* Logo */}
       <div className="flex items-center space-x-2">
         <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
           <span className="text-white font-bold text-lg">E</span>
         </div>
-        <span className="text-xl font-semibold text-gray-900 dark:text-white">
+        <span className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
           ExpenseTracker
         </span>
       </div>
 
       {/* Right side controls */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 sm:space-x-4">
         {user && (
-          <span className="text-sm text-gray-600 dark:text-gray-400">
+          <span className="hidden sm:inline text-sm text-gray-600 dark:text-gray-400 truncate max-w-[150px]">
             {user.fullName || user.email}
           </span>
         )}

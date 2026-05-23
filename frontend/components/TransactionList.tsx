@@ -84,20 +84,20 @@ const TransactionList: React.FC = () => {
   );
 
   return (
-    <div className="mt-12 px-6 py-4 bg-gray-50 dark:bg-gray-900 rounded-md">
+    <div className="mt-8 sm:mt-12 px-4 sm:px-6 py-4 bg-gray-50 dark:bg-gray-900 rounded-md">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
             Transactions
           </h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
             You had {getExpensesByDuration(duration).length} expenses
           </p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          className="flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm sm:text-base"
         >
           <Plus className="w-4 h-4" />
           <span>Add</span>
@@ -130,9 +130,9 @@ const TransactionList: React.FC = () => {
                   return (
                     <div
                       key={transaction.id}
-                      className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg hover:shadow-sm transition-shadow"
+                      className="flex items-center justify-between p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-lg hover:shadow-sm transition-shadow"
                     >
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-2.5 sm:space-x-3 min-w-0">
                         <div
                           className={`w-10 h-10 rounded-full flex items-center justify-center`}
                         >
@@ -140,18 +140,18 @@ const TransactionList: React.FC = () => {
                             {category?.icon || "📌"}
                           </span>
                         </div>
-                        <div>
-                          <p className="font-medium text-gray-900 dark:text-white">
+                        <div className="min-w-0">
+                          <p className="font-medium text-sm sm:text-base text-gray-900 dark:text-white truncate">
                             {transaction.description}
                           </p>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                             {category?.name || "Uncategorized"}
                           </p>
                         </div>
                       </div>
 
-                      <div className="flex items-center space-x-3">
-                        <span className="font-semibold text-gray-900 dark:text-white">
+                      <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
+                        <span className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white">
                           -{formatAmount(transaction.amount)}
                         </span>
                         <div className="relative">

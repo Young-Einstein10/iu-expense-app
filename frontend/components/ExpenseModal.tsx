@@ -182,16 +182,16 @@ const ExpenseModal: FC<ExpenseModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/10 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 sm:p-4">
       <div
         ref={modalRef}
-        className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md"
+        className="bg-white dark:bg-gray-800 rounded-t-xl sm:rounded-xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700">
           <h2
             id="modal-title"
             className="text-xl font-semibold text-gray-900 dark:text-white"
@@ -209,7 +209,7 @@ const ExpenseModal: FC<ExpenseModalProps> = ({
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4">
           <InputField label="Amount" error={errors.amount} icon={DollarSign}>
             <input
               type="number"

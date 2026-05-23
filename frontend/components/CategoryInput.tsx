@@ -147,7 +147,10 @@ const CategoryInput: FC<CategoryInputProps> = ({
             </button>
 
             {showEmojiPicker && (
-              <div ref={emojiPickerRef} className="absolute z-50 top-12 left-0">
+              <div
+                ref={emojiPickerRef}
+                className="fixed sm:absolute z-50 bottom-0 left-0 right-0 sm:bottom-auto sm:top-12 sm:left-0 sm:right-auto"
+              >
                 <Picker
                   data={data}
                   onEmojiSelect={handleEmojiSelect}

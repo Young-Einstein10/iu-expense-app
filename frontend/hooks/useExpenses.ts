@@ -12,7 +12,7 @@ export function useExpensesQuery() {
   return useQuery({
     queryKey: ["expenses"],
     queryFn: async () => {
-      const response = await api.getExpenses({ limit: 1000 });
+      const response = await api.getExpenses({ limit: 100 });
       return response.data.map((e) => ({
         id: e.id,
         amount: parseFloat(e.amount),

@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
       <Navbar />
-      <main className="mt-16 max-w-4xl mx-auto pb-18">
+      <main className="mt-14 sm:mt-16 max-w-4xl mx-auto pb-12 sm:pb-18">
         <TotalSpent />
         <TransactionList />
       </main>
